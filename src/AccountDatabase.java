@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 public class AccountDatabase {
-	private HashMap <String, Integer> accountDatabase; 
+	private static HashMap <String, Integer> accountDatabase; 
 	
 	public AccountDatabase ()
 	{
@@ -11,6 +11,11 @@ public class AccountDatabase {
 	public void addAccount (String id, int accountBalance)
 	{
 		accountDatabase.put (id, accountBalance);
+	}
+	
+	public static HashMap <String, Integer> getData ()
+	{
+		return accountDatabase;
 	}
 
 }
