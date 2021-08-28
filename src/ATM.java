@@ -12,12 +12,17 @@ public class ATM {
 		HashMap <String, Integer> data = AccountDatabase.getData();
 		if (!data.containsKey(id))
 		{
-			data.put (id, ((Integer)currBalance));
+			AccountDatabase.addAccount (id, ((Integer)currBalance));
 		}
 	}
 	
 	public void deposit (int deposit)
 	{
-		AccountDatabase.getData().replace (id, accountBalance + deposit);
+		AccountDatabase.changeBalance (id, accountBalance + deposit);
+	}
+	
+	public int getNewBalance()
+	{
+		return AccountDatabase.getData().get (id);
 	}
 }
