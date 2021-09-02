@@ -1,28 +1,56 @@
-import java.util.HashMap;
+import java.util.*;
+
 
 public class ATM {
-	
-	private String id;
-	private int accountBalance;
-	
-	public ATM (String id, int currBalance)
+	HashMap<String, Double> bankBalances = new HashMap<String,Double>();
+
+	public void deposit (String theID, double amount)
 	{
-		this.id= id;
-		this.accountBalance = currBalance;
-		HashMap <String, Integer> data = AccountDatabase.getData();
-		if (!data.containsKey(id))
+		if (amount<0) {
+			System.out.println("Error. You must deposit a positive value.");
+		}
+		else if (!(bankBalances.containsKey(theID)))
 		{
-			AccountDatabase.addAccount (id, ((Integer)currBalance));
+			bankBalances.put(theID, amount);
+			System.out.println("You succesfully created an account and deposited the money.");
+		}
+		else
+		{
+			bankBalances.replace(theID, bankBalances.get(theID)+amount);
+			System.out.println("You succesfully deposited the money.");
 		}
 	}
-	
-	public void deposit (int deposit)
+	public void withdraw (String theID, double withdraw)
 	{
-		AccountDatabase.changeBalance (id, accountBalance + deposit);
+		if (!(bankBalances.containsKey(theID)))
+		{
+			System.out.println("Error. The account doesn't exist.");
+		}
+		else if (withdraw<0)
+		{
+			System.out.println("Error. You must withdraw a positive amount.");
+		}
+		else
+		{
+			if (withdraw>bankBalances.get(theID))
+			{
+				System.out.println("Error. You can't withdraw that much money.");
+			}
+			else
+			{
+				bankBalances.replace(theID, bankBalances.get(theID)-withdraw);
+				System.out.println("You succesfully withdrew the money.");
+			}
+		}
 	}
-	
-	public int getNewBalance()
+	public String checkBalance (String theID)
 	{
-		return AccountDatabase.getData().get (id);
+		if (!(bankBalances.containsKey(theID)))
+		{
+			return ("Error. The account doesn't exist.");
+		}
+		String theBalance;
+		theBalance = "" + bankBalances.get(theID);
+		return theBalance;
 	}
 }
